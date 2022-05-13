@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            display: flex;
+            justify-content: space-around;
+        }
+        #container{
+            width: 20%;
+
+        }
+        input{
+            margin-top: 10px;
+            width: 100%;
+            height: 60px;
+        }
+        #submit{
+            padding: 10px;
+            background-color: black;
+            color: white;
+            font-size: 25px;
+            border: 0px;
+        }
+        td{
+            border: 2px solid black;
+            padding: 20px;
+            margin: 6px;
+        }
+    </style>
+</head>
+<body>
+  
+    <div id="container">
+        <h1>Student Form</h1>
+    <form>
+        <input type="text" name="name" id="name" placeholder="Enter Your Name" >
+        <input type="number" name="number" id="number" placeholder="Enter Your Number">
+        <input type="text" id="city" placeholder="Enter Your City">
+        <input type="submit"  id="submit">
+    </form>
+</div>
+<div>
+<table>
+    <thead>
+       <tr>
+           <td>Name of student</td>
+           <td>Mobile Number</td>
+           <td>City</td>
+       </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+</div>
+</body>
+</html>
+<script>
+  
+   var data = JSON.parse(localStorage.getItem("studentData") )||[];
+   function display(data)
+   {
+     document.querySelector("tbody").textContent=""
+   data.map(function(ele)
+   {
+   
+      var tr = document.createElement("tr")
+
+      var td1 = document.createElement("td")
+      td1.textContent=ele.name;
+
+      var td2 = document.createElement("td")
+      td2.textContent=ele.number;
+
+      var td3 = document.createElement("td")
+      td3.textContent=ele.city;
+
+      tr.append(td1,td2,td3)
+
+      document.querySelector("tbody").append(tr)
+
+      
+   })
+ 
+   }
+//    console.log(c)
+ var arr =JSON.parse(localStorage.getItem("studentData") )||[];
+ document.querySelector("form").addEventListener("submit",myfunction)
+ display(arr)
+ function student(n,m,c)
+ {
+    this.name =n
+    this.number =m
+    this.city = c
+ }
+
+
+ function myfunction(event)
+ {
+   event.preventDefault()
+   var name = document.querySelector("#name").value
+   var num = document.querySelector("#number").value
+   var city = document.querySelector("#city").value
+//   console.log(name)
+    
+  var students = new student(name,num,city)
+   arr.push(students) 
+   console.log(arr)
+
+  localStorage.setItem("studentData",JSON.stringify(arr))
+
+  display(arr)
+ }
+ 
+
+</script>

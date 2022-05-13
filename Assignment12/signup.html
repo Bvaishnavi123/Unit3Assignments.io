@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        #container{
+            width: 200px;
+            margin: auto;
+            text-align: center;
+            /* border: 1px solid black; */
+        }
+        input{
+            margin-bottom: 10px;
+            padding: 10px;
+           
+        }
+        button{
+            padding: 10px;
+            background-color: black;
+            color: wheat;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+     
+        <h1>Register</h1>
+        <form action="">
+            <input type="text" id="name">
+            <input type="email" id="email">
+            <input type="text" id="username">
+            <input type="password" id="password" >
+            <input type="number" id="mobile" placeholder="Number" />
+            <input type="text" id="description" placeholder="Description" />
+
+        </form>
+
+        <button onclick="Register()" >Register</button>
+
+    </div>
+</body>
+</html>
+<script>
+    //api link - https://masai-api-mocker.herokuapp.com/
+
+  //   reg link - https://masai-api-mocker.herokuapp.com/auth/register
+  //  log link - https://masai-api-mocker.herokuapp.com/auth/login
+ async function Register()
+ {
+     try {
+    let register_data ={
+        name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            username: document.getElementById("username").value,
+            mobile:document.getElementById("mobile").value ,
+            description: document.getElementById("description").value
+    }
+
+    let new_register_data = JSON.stringify(register_data);
+     
+     let res = await fetch(`https://masai-api-mocker.herokuapp.com/auth/register`,{
+            method: 'POST',
+            body: new_register_data,
+            headers: {
+                "Content-Type":"application/json"
+            },
+        });
+          let data = await res.json()
+          console.log(data)
+
+          window.location.href="login.html"
+
+     } catch (error) {
+         console.log(error)
+     }
+ }
+
+
+</script>

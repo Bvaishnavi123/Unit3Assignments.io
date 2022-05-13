@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        #log-in{
+            width: 200px;
+            margin: auto;
+            text-align: center;
+        }
+
+        input{
+            margin-bottom: 10px;
+            padding: 10px;
+           
+        }
+        button{
+            padding: 10px;
+            background-color: black;
+            color: wheat;
+        }
+    </style>
+</head>
+<body>
+    <div id="log-in">
+        <h1>Login</h1>
+        <form>
+          <input type="text" id="login-username" placeholder="userame" />
+          <input type="text" id="login-password" placeholder="Password" />
+        </form>
+
+        <button onclick="Login()">Login</button>
+      </div>
+    </div>
+    </div>
+</body>
+</html>
+<script>
+   async function Login()
+   {
+       try {
+        let log_in_data ={
+           username:document.getElementById("login-username").value,
+           password: document.getElementById("login-password").value,
+
+       }
+
+       let log_in_data_json = JSON.stringify(log_in_data)
+
+       let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/login",{
+
+        method:"POST",
+
+        body:log_in_data_json,
+        headers:{
+            "Content-Type":"application/json"
+        },
+       
+
+       
+       });
+
+       let data = await res.json()
+    //    console.log(data)
+
+       get_user(log_in_data.username,data.token)
+       } catch (error) {
+           console.log(error)
+       }
+       
+
+
+
+
+   }
+
+   
+  let get_user = async (username,token)=>{
+    try {
+        let res = await fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`,{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        })
+
+        let data = await res.json()
+        console.log(data)
+        localStorage.setItem("data1",JSON.stringify(data))
+        window.location.href="index.html"
+        
+    } catch (error) {
+        console.log('error:', error)
+        
+    }
+  }
+</script>

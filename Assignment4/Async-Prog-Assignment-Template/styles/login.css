@@ -1,0 +1,18 @@
+#login-form-div
+{
+    width: 20% ;
+    /* height: 300px; */
+    margin: auto;
+    margin-top: 100px;
+    border: 1px solid black;
+    border-radius: 2%;
+    padding: 3%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    /* text-align: center; */
+}
+input{
+    width: 100%;
+    padding: 2%;
+    margin-top: 20px;
+
+}

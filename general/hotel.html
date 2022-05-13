@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        button,
+        select {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #navbar {
+            background-color: #cecece;
+            display: flex;
+            flex-direction: row-reverse;
+            padding: 20px;
+        }
+
+        #navbar>* {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        #container>div {
+            padding: 10px;
+            border: 1px solid #cecece;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-align-center {
+            text-align: center;
+        }
+    </style>
+    <title>Products</title>
+</head>
+
+<body>
+    <div id="navbar">
+        <div id="cart-count"></div>
+        <a href="cart.html">Cart</a>
+    </div>
+    <div id="sort-filter">
+        <select name="sort" id="sortButton" onchange="sortProducts()">
+            <option value="">SORT</option>
+            <option value="asc">Low to High</option>
+            <option value="desc">High to Low</option>
+        </select>
+        <select name="filter" id="filterButton" onchange="filterProducts()">
+            <option value="">FILTER</option>
+            <option value="0-50">0 - 50</option>
+            <option value="51-150">51 - 150</option>
+            <option value=">150">Greater than 150</option>
+        </select>
+    </div>
+    <div id="container"></div>
+</body>
+
+</html>
+<script>
+    let url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian`;
+    let container = document.getElementById("container");
+   let arr =[];
+    getProducts()
+    async function getProducts(){
+        let res = await fetch(url)
+        let data = await res.json()
+        let newdata = data.meals
+        console.log(newdata)
+        renderProducts(newdata)
+    }
+//     idMeal: "52807"
+// strMeal: "Baingan Bharta"
+// strMealThumb: "https://www.themealdb.com/images/media/meals/urtpqw14873
+    function renderProducts(products){
+        //make a card out of it . 1 card= 1 product;
+        //append all of this card in ones container 
+        let container = document.getElementById("container");
+        container.innerHTML = "";
+        var arr= JSON.parse(localStorage.getItem("mart")) || [];
+       products.forEach(function (prod) {
+          let prodCard = document.createElement("div");
+          
+          //creat product image;
+          let image = document.createElement("img");
+          image.src = prod.strMealThumb;
+         //create product title;
+         let title = document.createElement("p");
+
+         title.innerHTML = prod.strMeal;
+          let id = document.createElement("p");
+         id.innerHTML = prod.idMeal;
+         
+         let rate = document.createElement("h4");
+            let s1 = Math.round(Math.random() * (500- 0) + 0)
+            let p1 = s1;
+            rate.innerHTML = "Price : " + p1;
+
+         let button1 =document.createElement("button");
+        button1.innerText="Add to cart";
+        button1.addEventListener("click",function()
+        {
+            arr.push(ele);
+            localStorage.setItem("mart",JSON.stringify(arr));
+        })
+         prodCard.append(image, title,rate,id,button1);
+         container.append(prodCard);
+         
+       });
+
+
+    }
+    async function sortProducts()
+{
+    container.innerHTML=null;
+    let sortval = document.getElementById("sort-filter").value;
+    let resp = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian`);
+    let data =await resp.json();
+    console.log(data.meals)
+    if(sortval=="asc")
+    {
+        data.meals.sort(function(a,b)
+        {
+            return a.rate-b.rate;
+        });
+        renderProducts(data);
+        console.log(data)
+    }
+   else{
+    data.sort(function(a,b)
+    {
+        return b.rate-a.rate;
+    })
+    renderProducts(data);
+   }
+
+}
+async function letfil()
+{
+    contain.innerHTML=null;
+    let resp = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian`);
+    let data =await resp.json();
+    let filterCriteria  = document.getElementById("filter").value;
+    
+            if (filterCriteria === "0-50") {
+              return prod.rate <= 50;
+            } else if (filterCriteria === "51-150") {
+              return prod.rate > 50 && prod.rate <= 150;
+            } else if (filterCriteria === ">150") {
+              return prod.rate > 150;
+            } else {
+              return true;
+            }
+        renderProducts(newdata);
+  }
+
+    
+</script>

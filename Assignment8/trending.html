@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Movies</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        #moviecontainer
+        {
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 20px;
+        }
+        #singlemovie
+        {
+           text-align: center;
+           border: 1px solid rgb(255, 250, 250);
+           color: bisque;
+           box-shadow: rgba(242, 244, 246, 0.3) 0px 3px 3px 3px, rgba(225, 230, 233, 0.15) 3px 3px 3px 3px;
+        }
+
+        #poster{
+            width: 80%;
+            height: 200px;
+            position: sticky;
+        }
+        h1{
+            color: beige;
+            
+        }
+        #heading{
+            width: 30%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="heading">
+    <h1>TREDING MOVIES</h1>
+</div>
+    <div id="moviecontainer"></div>
+</body>
+</html>
+<script src="trending.js"></script>
